@@ -1,4 +1,4 @@
-export async function getStudyPlan(prompt: string): Promise<string> {
+export async function getStudyPlan(prompt: string) {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -7,20 +7,10 @@ export async function getStudyPlan(prompt: string): Promise<string> {
     },
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a smart study assistant. Generate a 2-3 hour detailed study plan based on user input. Use emojis and clear formatting.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
+      messages: [{ role: "user", content: prompt }],
     }),
   });
 
   const data = await response.json();
-  return data.choices[0].message.content.trim();
+  return data.choices?.[0]?.message?.content;
 }
