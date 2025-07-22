@@ -15,37 +15,28 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 font-sans">
-      <header className="mb-10 text-center">
-        <h1 className="text-4xl font-bold text-indigo-600">ZenStudy</h1>
-        <p className="text-lg text-gray-600">
-          Your AI-powered smart study planner ✨
-        </p>
-      </header>
+    <div className="font-sans bg-gray-50 min-h-screen">
+      {/* Hero Section */}
+      <section className="text-center py-20 px-4 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
+        <h1 className="text-5xl font-extrabold mb-4">ZenStudy</h1>
+        <p className="text-xl mb-6">Your AI-powered smart study planner</p>
+        <a href="#planner">
+          <button className="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-xl hover:bg-gray-200 transition">
+            Start Planning →
+          </button>
+        </a>
+      </section>
 
-      <main className="max-w-3xl mx-auto space-y-8">
-        {/* Static Plan Card */}
+      {/* Main Planner Section */}
+      <main id="planner" className="max-w-3xl mx-auto py-16 px-4 space-y-10">
+        {/* Static Plan */}
         <div className="bg-white shadow-lg rounded-2xl p-6">
           <h2 className="text-2xl font-semibold mb-2">Today's Study Plan</h2>
           <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>🧠 Revise Calculus - 10:00 AM</li>
-            <li>📚 Physics Quiz Practice - 11:30 AM</li>
-            <li>📝 History Notes - 3:00 PM</li>
+            <li>📘 Revise Calculus - 10:00 AM</li>
+            <li>🔬 Physics Quiz Practice - 11:30 AM</li>
+            <li>📜 History Notes - 3:00 PM</li>
           </ul>
-        </div>
-
-        {/* AI Tip */}
-        <div className="bg-indigo-50 border-l-4 border-indigo-400 p-5 rounded-xl mb-4">
-          <h3 className="text-lg font-semibold text-indigo-700">AI Tip 💡</h3>
-          <p className="text-gray-800">
-            You're most focused in the morning. Schedule problem-solving sessions before noon!
-          </p>
-        </div>
-
-        {/* Smart Break */}
-        <div className="bg-green-50 border-l-4 border-green-400 p-5 rounded-xl mb-4">
-          <h3 className="text-lg font-semibold text-green-700">Smart Break</h3>
-          <p className="text-gray-800">Try a 5-minute breathing exercise at 1:30 PM to recharge.</p>
         </div>
 
         {/* AI Study Plan Generator */}
@@ -54,7 +45,7 @@ const App = () => {
           <input
             type="text"
             className="w-full border border-gray-300 rounded-md p-2 mb-4"
-            placeholder="e.g. Create a 2-hour plan for Physics and History"
+            placeholder="e.g. Make a 2-hour plan for Math and History"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
@@ -67,7 +58,7 @@ const App = () => {
           </button>
         </div>
 
-        {/* AI Response */}
+        {/* AI Output */}
         {response && (
           <div className="bg-indigo-100 border-l-4 border-indigo-400 p-5 rounded-xl whitespace-pre-wrap">
             <h3 className="text-lg font-semibold text-indigo-800 mb-2">Your AI Study Plan:</h3>
@@ -75,6 +66,11 @@ const App = () => {
           </div>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="text-center text-sm text-gray-500 pb-6">
+        Built with 💻 by Shravya N. Bhat · <a className="underline" href="https://github.com/Shravya2820" target="_blank">GitHub</a>
+      </footer>
     </div>
   );
 };
