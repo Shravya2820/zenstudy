@@ -72,18 +72,3 @@ ZenStudy is built with privacy-first principles:
 ### Phase 4
 🔜 AI tutor integration  
 🔜 Community features
-
----
-
-## 🛠 Getting Started (Development)
-
-```bash
-# Clone the repo
-git clone https://github.com/your-username/zenstudy.git
-cd zenstudy
-
-# Install dependencies
-npm install
-
-# Run the frontend
-npm run dev
