@@ -1,74 +1,48 @@
-# ZenStudy: Smart Study Planner
+# 💡 ZenStudy
 
-ZenStudy is an **AI-powered smart study planner** designed to optimize learning, prevent burnout, and create personalized study experiences. It adapts in real-time based on cognitive states and user-defined goals.
+Your AI-powered smart study planner to help students plan, focus, and thrive — now with Firebase Authentication and full Vercel deployment.
 
-## 🌟 Features
-
-- **Dynamic Study Scheduler**: Adjusts in real-time based on fatigue, productivity, and focus levels.
-- **Smart Break Suggestions**: Offers guided activities like meditation, puzzles, or stretches.
-- **Learning Insights Dashboard**: Provides analytics on study habits and cognitive states.
-- **Privacy-First Focus Tracking**: Optional, consent-based webcam/mouse tracking.
+![ZenStudy Banner](https://zenstudy-aojx.vercel.app/banner.png) <!-- optional, add a banner image if you have one -->
 
 ---
 
-## 🧠 Tech Stack
-
-### Frontend
-- React.js with TypeScript
-- Tailwind CSS (or Chakra UI)
-- Zustand (or Redux)
-
-### Backend
-- Node.js (Express) **or** FastAPI (Python)
-- PostgreSQL
-- Redis (optional)
-
-### AI/ML Layer
-- Python with:
-  - TensorFlow or Scikit-learn
-  - OpenAI API for recommendations
-  - MediaPipe / TF Lite for focus detection
-
-### DevOps & Infra
-- Docker, Kubernetes
-- AWS / GCP / Azure
-- GitHub Actions for CI/CD
-
-### Analytics & Monitoring
-- Kafka / MQTT (optional)
-- Prometheus + Grafana
-
-### Security
-- OAuth 2.0 / JWT Authentication
-- End-to-End Encryption
-- Full data anonymization
+## 🚀 Live Demo
+👉 [https://zenstudy-aojx.vercel.app](https://zenstudy-aojx.vercel.app)
 
 ---
 
-## 🔐 Privacy & Ethics
+## ✨ Features
 
-ZenStudy is built with privacy-first principles:
-- All data collection is **consent-driven**
-- Focus detection can be turned **on/off** at any time
-- Data is anonymized and encrypted
+- 🎯 **Custom Study Plan Generator** – Powered by AI prompts (mocked for now)
+- ⏱️ **Pomodoro Timer** – Start, pause, and reset study sessions
+- 🧠 **AI Tips & Smart Breaks** – Based on your input and study load
+- 🔐 **Firebase Authentication** – Google Sign-in & Email/Password login
+- 📱 **Responsive Design** – Mobile-friendly & user-first UI
+- ⚡ **Vercel Deployed** – Instant updates with Git push
 
 ---
 
-## 🚀 Roadmap
+## 🛠️ Tech Stack
 
-### Phase 1 (Hackathon MVP)
-✅ Dynamic study scheduling  
-✅ Smart break suggestions  
-🚧 Real-time focus tracking (mocked)
+| Technology       | Description                        |
+|------------------|------------------------------------|
+| React + TypeScript | Frontend Framework                |
+| Vite             | Build Tool                         |
+| Tailwind CSS     | Styling                            |
+| Firebase         | Authentication (Google + Email)   |
+| Mocked OpenAI    | AI-powered response (no API needed)|
+| Git + Vercel     | Version Control & Hosting          |
 
-### Phase 2
-🔜 Focus detection (MediaPipe or webcam input)  
-🔜 Learning analytics dashboard
+---
 
-### Phase 3
-🔜 Desktop tracker (Electron/Tauri)  
-🔜 Mobile App
+## 🔐 Firebase Setup (Pre-configured)
 
-### Phase 4
-🔜 AI tutor integration  
-🔜 Community features
+Firebase project: `zenstudy-app`  
+App ID: `1:562187212311:web:3f534d5024e566d0faae52`
+
+Environment variables used:
+```env
+VITE_FIREBASE_API_KEY=AIzaSyCOXbBly-bXluTsVOkn2tDEaKZpyXN203w
+VITE_FIREBASE_AUTH_DOMAIN=zenstudy-app.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=zenstudy-app
+VITE_FIREBASE_APP_ID=1:562187212311:web:3f534d5024e566d0faae52
