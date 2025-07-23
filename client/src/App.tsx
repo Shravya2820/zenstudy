@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import "./index.css";
+import React, { useEffect, useState } from "react";
 import { getMockStudyPlan } from "./lib/openai";
 import { StudyPlan } from "./types";
 import Timer from "./components/Timer";
+import { auth, provider } from "./lib/firebase";
+import { signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 
-function App() {
+const App: React.FC = () => {
   const [prompt, setPrompt] = useState("");
   const [plan, setPlan] = useState<StudyPlan | null>(null);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const [error, setError] = useState("");
 
   const handleGenerate = async () => {
@@ -16,64 +18,87 @@ function App() {
     try {
       const mockPlan = await getMockStudyPlan(prompt);
       setPlan(mockPlan);
-    } catch (err) {
+    } catch {
       setError("Failed to load study plan.");
     } finally {
       setLoading(false);
     }
   };
 
+  const login = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (e) {
+      setError("Login failed.");
+    }
+  };
+
+  const logout = () => signOut(auth);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, setUser);
+    return () => unsubscribe();
+  }, []);
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <button onClick={login} className="px-6 py-3 text-white bg-blue-600 rounded text-lg shadow">
+          Sign in with Google
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6 font-sans text-center">
-      <h1 className="text-4xl font-extrabold text-indigo-600 mb-2">ZenStudy</h1>
-      <p className="text-gray-500 mb-6">Your AI-powered smart study planner ✨</p>
+    <div className="min-h-screen p-6 bg-gray-100 font-sans">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-4xl font-bold text-center text-blue-600">
+          ZenStudy <span className="text-sm">📚</span>
+        </h1>
+        <button onClick={logout} className="bg-red-500 text-white px-4 py-1 rounded">Logout</button>
+      </div>
 
       <textarea
+        className="w-full p-3 rounded border mb-4"
+        placeholder="e.g., I want to study DSA or revise Biology..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        placeholder="What do you want to study today?"
-        className="w-full max-w-xl mx-auto p-4 rounded shadow border resize-none mb-4"
-        rows={3}
       />
       <button
         onClick={handleGenerate}
-        disabled={loading || !prompt.trim()}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2 rounded transition duration-200 mb-6"
+        disabled={loading}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded"
       >
-        {loading ? "Generating..." : "Generate Study Plan"}
+        {loading ? "Loading..." : "Generate Study Plan"}
       </button>
 
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {error && <p className="text-red-500 mt-3">{error}</p>}
 
       {plan && (
-        <div className="max-w-xl mx-auto bg-white rounded-lg shadow-md p-6 text-left">
-          <h2 className="text-2xl font-bold mb-4">📅 Today's Study Plan</h2>
-          <ul className="space-y-2">
-            {plan.topics.map((topic, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <span className="text-lg">📘</span>
-                <span>{topic.title} – {topic.duration}</span>
+        <div className="mt-6 p-6 bg-white rounded shadow">
+          <h2 className="text-xl font-semibold mb-2">Subject: {plan.subject}</h2>
+          <ul className="list-disc ml-5">
+            {plan.items.map((item, index) => (
+              <li key={index}>
+                <span className="font-semibold">{item.topic}</span> – {item.duration}
               </li>
             ))}
           </ul>
-
-          <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-            <strong className="text-blue-700">AI Tip 💡</strong>
-            <p>You're most focused in the morning. Schedule problem-solving sessions before noon!</p>
-          </div>
-
-          <div className="mt-4 p-4 bg-green-50 border-l-4 border-green-400 rounded">
-            <strong className="text-green-700">Smart Break</strong>
-            <p>Try a 5-minute breathing exercise at 1:30 PM to recharge.</p>
-          </div>
-
-          <div className="mt-6">
-            <Timer />
+          <div className="mt-4">
+            <h3 className="font-bold">Breaks:</h3>
+            <ul className="list-disc ml-5">
+              {plan.breakTips.map((tip, index) => (
+                <li key={index}>{tip}</li>
+              ))}
+            </ul>
           </div>
         </div>
       )}
+
+      <Timer />
     </div>
   );
-}
+};
 
 export default App;

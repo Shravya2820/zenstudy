@@ -1,5 +1,10 @@
-export type StudyPlan = {
+export interface StudyItem {
+  topic: string;
+  duration: string;
+}
+
+export interface StudyPlan {
   subject: string;
-  topics: { title: string; duration: string }[];
-  breaks: string[];
-};
+  items: StudyItem[];
+  breakTips: string[];
+}
