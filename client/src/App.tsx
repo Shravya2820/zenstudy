@@ -1,82 +1,54 @@
 import React, { useState } from "react";
-import { getMockStudyPlan } from "./lib/openai";
 import "./index.css";
+import { getMockStudyPlan } from "./lib/openai";
 
-type Topic = {
+type StudyItem = {
   title: string;
-  duration: string;
-};
-
-type StudyPlan = {
-  subject: string;
-  topics: Topic[];
-  breaks: string[];
+  time: string;
 };
 
 function App() {
-  const [prompt, setPrompt] = useState("");
-  const [plan, setPlan] = useState<StudyPlan | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [plan, setPlan] = useState<StudyItem[]>([
+    { title: "Revise Calculus", time: "10:00 AM" },
+    { title: "Physics Quiz Practice", time: "11:30 AM" },
+    { title: "History Notes", time: "3:00 PM" },
+  ]);
 
-  const handleGenerate = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const mockPlan = await getMockStudyPlan(prompt);
-      setPlan(mockPlan);
-    } catch (err) {
-      setError("Failed to load study plan.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const aiTip = "You're most focused in the morning. Schedule problem-solving sessions before noon!";
+  const breakSuggestion = "Try a 5-minute breathing exercise at 1:30 PM to recharge.";
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 font-sans">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4 text-center text-blue-700">
-          ZenStudy 📚
-        </h1>
-        <textarea
-          className="w-full p-3 border rounded mb-4 resize-none shadow-sm"
-          rows={4}
-          placeholder="Enter your subject or study goals..."
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-        <button
-          onClick={handleGenerate}
-          disabled={loading || !prompt.trim()}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mb-4"
-        >
-          {loading ? "Generating..." : "Generate Study Plan"}
-        </button>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-4xl font-bold text-center text-indigo-700 mb-2">
+        Zen<span className="text-black">Study</span>
+      </h1>
+      <p className="text-center text-gray-600 mb-6">
+        Your AI-powered smart study planner ✨
+      </p>
 
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+      <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Today's Study Plan</h2>
+        <ul className="space-y-2">
+          {plan.map((item, index) => (
+            <li key={index} className="flex items-center space-x-2">
+              <span>
+                {index === 0 ? "🧠" : index === 1 ? "📚" : "📝"}
+              </span>
+              <span className="font-medium">{item.title}</span>
+              <span className="text-sm text-gray-500 ml-auto">{item.time}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-        {plan && (
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-semibold mb-2">
-              Subject: {plan.subject}
-            </h2>
-            <ul className="mb-4">
-              {plan.topics.map((topic, index) => (
-                <li key={index} className="mb-1">
-                  ✅ <strong>{topic.title}</strong> – {topic.duration}
-                </li>
-              ))}
-            </ul>
-            <div>
-              <h3 className="font-semibold mb-1">Breaks:</h3>
-              <ul className="list-disc list-inside">
-                {plan.breaks.map((b, idx) => (
-                  <li key={idx}>{b}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
+      <div className="max-w-xl mx-auto bg-indigo-100 border-l-4 border-indigo-400 text-indigo-700 p-4 mb-4 rounded-md">
+        <strong>AI Tip 💡</strong>
+        <p>{aiTip}</p>
+      </div>
+
+      <div className="max-w-xl mx-auto bg-green-100 border-l-4 border-green-400 text-green-700 p-4 rounded-md">
+        <strong>Smart Break</strong>
+        <p>{breakSuggestion}</p>
       </div>
     </div>
   );
