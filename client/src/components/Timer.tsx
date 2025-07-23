@@ -1,54 +1,41 @@
 import React, { useEffect, useState } from "react";
 
-interface TimerProps {
-  duration: string; // Format: "25m" or "1h"
-}
-
-const Timer: React.FC<TimerProps> = ({ duration }) => {
-  const [timeLeft, setTimeLeft] = useState<number>(parseDuration(duration));
-  const [isRunning, setIsRunning] = useState(false);
+const Timer = () => {
+  const [seconds, setSeconds] = useState(25 * 60);
+  const [running, setRunning] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isRunning && timeLeft > 0) {
-      timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    let interval: ReturnType<typeof setInterval>;
+    if (running) {
+      interval = setInterval(() => {
+        setSeconds((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
     }
-    return () => clearTimeout(timer);
-  }, [isRunning, timeLeft]);
+    return () => clearInterval(interval);
+  }, [running]);
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
+  const formatTime = (sec: number) => {
+    const m = Math.floor(sec / 60).toString().padStart(2, "0");
+    const s = (sec % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
-  function parseDuration(input: string): number {
-    const match = input.match(/(\d+)([mh])/i);
-    if (!match) return 0;
-
-    const value = parseInt(match[1], 10);
-    const unit = match[2].toLowerCase();
-
-    return unit === "h" ? value * 3600 : value * 60;
-  }
-
   return (
-    <div className="flex items-center space-x-4 mt-4">
-      <div className="text-lg font-mono">{formatTime(timeLeft)}</div>
+    <div className="text-center mt-6">
+      <h3 className="text-lg font-semibold mb-2">⏱️ Study Timer</h3>
+      <p className="text-2xl font-mono mb-2">{formatTime(seconds)}</p>
       <button
-        className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
-        onClick={() => setIsRunning(!isRunning)}
+        onClick={() => setRunning(!running)}
+        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
       >
-        {isRunning ? "Pause" : "Start"}
+        {running ? "Pause" : "Start"}
       </button>
       <button
-        className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
         onClick={() => {
-          setIsRunning(false);
-          setTimeLeft(parseDuration(duration));
+          setRunning(false);
+          setSeconds(25 * 60);
         }}
+        className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
       >
         Reset
       </button>

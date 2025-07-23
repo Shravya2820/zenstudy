@@ -1,10 +1,5 @@
-export type Topic = {
-  title: string;
-  duration: string;
-};
-
 export type StudyPlan = {
   subject: string;
-  topics: Topic[];
+  topics: { title: string; duration: string }[];
   breaks: string[];
 };
