@@ -1,10 +1,8 @@
 # 💡 ZenStudy
 
 Your AI-powered smart study planner to help students plan, focus, and thrive — now with Firebase Authentication and full Vercel deployment.
-
-![ZenStudy Banner](https://zenstudy-aojx.vercel.app/banner.png) <!-- optional, add a banner image if you have one -->
-
----
+ 
+ ---
 
 ## 🚀 Live Demo
 👉 [https://zenstudy-aojx.vercel.app](https://zenstudy-drrpmonjb-shravyanbhat01-7127s-projects.vercel.app)
