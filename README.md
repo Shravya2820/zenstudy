@@ -7,7 +7,7 @@ Your AI-powered smart study planner to help students plan, focus, and thrive —
 ---
 
 ## 🚀 Live Demo
-👉 [https://zenstudy-aojx.vercel.app](https://zenstudy-aojx.vercel.app)
+👉 [https://zenstudy-aojx.vercel.app](https://zenstudy-drrpmonjb-shravyanbhat01-7127s-projects.vercel.app)
 
 ---
 
